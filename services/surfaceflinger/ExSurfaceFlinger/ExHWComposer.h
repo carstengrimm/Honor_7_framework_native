@@ -43,7 +43,7 @@ public:
 
     virtual ~ExHWComposer();
 
-#ifdef QTI_BSP
+#ifdef HISI_3635
     uint32_t getS3DFlag(int disp) const;
 #endif
 

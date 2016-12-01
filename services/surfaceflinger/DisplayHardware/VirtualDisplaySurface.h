@@ -72,7 +72,7 @@ class VirtualDisplaySurface : public DisplaySurface,
                               public BnGraphicBufferProducer,
                               private ConsumerBase {
 public:
-#ifdef QTI_BSP
+#ifdef HISI_3635
     friend class ExVirtualDisplaySurface;
 #endif
 

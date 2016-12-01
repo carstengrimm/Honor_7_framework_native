@@ -39,7 +39,7 @@
 #include "RenderEngine/RenderEngine.h"
 #include "DisplayHardware/FramebufferSurface.h"
 #include "DisplayUtils.h"
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #include <ExSurfaceFlinger/ExSurfaceFlinger.h>
 #include <ExSurfaceFlinger/ExLayer.h>
 #include <ExSurfaceFlinger/ExHWComposer.h>
@@ -59,7 +59,7 @@ DisplayUtils* DisplayUtils::sDisplayUtils = NULL;
 bool DisplayUtils::sUseExtendedImpls = false;
 
 DisplayUtils::DisplayUtils() {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     sUseExtendedImpls = true;
 #endif
 }
@@ -72,7 +72,7 @@ DisplayUtils* DisplayUtils::getInstance() {
 }
 
 SurfaceFlinger* DisplayUtils::getSFInstance() {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     if(sUseExtendedImpls) {
         return new ExSurfaceFlinger();
     }
@@ -83,7 +83,7 @@ SurfaceFlinger* DisplayUtils::getSFInstance() {
 Layer* DisplayUtils::getLayerInstance(SurfaceFlinger* flinger,
                             const sp<Client>& client, const String8& name,
                             uint32_t w, uint32_t h, uint32_t flags) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     if(sUseExtendedImpls) {
         return new ExLayer(flinger, client, name, w, h, flags);
     }
@@ -94,7 +94,7 @@ Layer* DisplayUtils::getLayerInstance(SurfaceFlinger* flinger,
 HWComposer* DisplayUtils::getHWCInstance(
                         const sp<SurfaceFlinger>& flinger,
                         HWComposer::EventHandler& handler) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     if(sUseExtendedImpls) {
         return new ExHWComposer(flinger, handler);
     }
@@ -108,7 +108,7 @@ void DisplayUtils::initVDSInstance(HWComposer* hwc, int32_t hwcDisplayId,
         sp<IGraphicBufferConsumer> bqConsumer, String8 currentStateDisplayName,
         bool currentStateIsSecure, int currentStateType)
 {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     if(sUseExtendedImpls) {
         if(hwc->isVDSEnabled()) {
             VirtualDisplaySurface* vds = new ExVirtualDisplaySurface(*hwc, hwcDisplayId,
@@ -131,7 +131,7 @@ void DisplayUtils::initVDSInstance(HWComposer* hwc, int32_t hwcDisplayId,
                 currentStateSurface, bqProducer, bqConsumer, currentStateDisplayName);
         dispSurface = vds;
         producer = vds;
-#ifdef QTI_BSP
+#ifdef HISI_3635
     }
 #endif
 }
@@ -175,10 +175,10 @@ bool DisplayUtils::createV4L2BasedVirtualDisplay(HWComposer* hwc, int32_t &hwcDi
 }
 
 bool DisplayUtils::canAllocateHwcDisplayIdForVDS(int usage) {
-    // on AOSP builds with QTI_BSP disabled, we should allocate hwc display id for virtual display
+    // on AOSP builds with HISI_3635 disabled, we should allocate hwc display id for virtual display
     int flag_mask = 0xffffffff;
 
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #ifdef FORCE_HWC_COPY_FOR_VIRTUAL_DISPLAYS
 #ifdef SDM_TARGET
     int hdmi_node = qdutils::getHDMINode();

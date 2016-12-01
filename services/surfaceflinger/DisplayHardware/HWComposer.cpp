@@ -36,7 +36,7 @@
 
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #include <hardware/display_defs.h>
 #endif
 
@@ -1024,11 +1024,11 @@ public:
     }
     virtual void setAnimating(bool animating) {
         if (animating) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
             getLayer()->flags |= HWC_SCREENSHOT_ANIMATOR_LAYER;
 #endif
         } else {
-#ifdef QTI_BSP
+#ifdef HISI_3635
             getLayer()->flags &= ~HWC_SCREENSHOT_ANIMATOR_LAYER;
 #endif
         }

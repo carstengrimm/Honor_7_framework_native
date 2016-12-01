@@ -34,7 +34,7 @@ LOCAL_CPPFLAGS += -Wno-switch-enum
 LOCAL_CPPFLAGS += -Wno-gnu-zero-variadic-macro-arguments
 
 # Don't warn about struct padding
-LOCAL_CPPFLAGS += -Wno-padded
+LOCAL_CPPFLAGS += -Wno-padded -Wno-unused-parameter -Wno-missing-variable-declarations
 
 LOCAL_SRC_FILES := \
 	IGraphicBufferConsumer.cpp \
@@ -70,6 +70,7 @@ LOCAL_SRC_FILES := \
 	SurfaceControl.cpp \
 	SurfaceComposerClient.cpp \
 	SyncFeatures.cpp \
+	hw_graphics.cpp
 
 LOCAL_SHARED_LIBRARIES := \
 	libbinder \

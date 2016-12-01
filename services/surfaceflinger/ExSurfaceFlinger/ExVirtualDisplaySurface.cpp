@@ -27,7 +27,7 @@
  */
 
 #include "ExVirtualDisplaySurface.h"
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #include <gralloc_priv.h>
 #endif
 
@@ -83,7 +83,7 @@ void ExVirtualDisplaySurface::setOutputUsage(uint32_t /*flag*/) {
          * The current solution assumes WV L3 protection.
          */
         mOutputUsage |= GRALLOC_USAGE_PROTECTED;
-#ifdef QTI_BSP
+#ifdef HISI_3635
         mOutputUsage |= GRALLOC_USAGE_PRIVATE_MM_HEAP |
                         GRALLOC_USAGE_PRIVATE_UNCACHED;
 #endif

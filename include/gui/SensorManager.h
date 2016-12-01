@@ -59,11 +59,13 @@ public:
     sp<SensorEventQueue> createEventQueue(String8 packageName = String8(""), int mode = 0);
     bool isDataInjectionEnabled();
 
+    SensorManager(const String16& opPackageName);
+
 private:
     // DeathRecipient interface
     void sensorManagerDied();
 
-    SensorManager(const String16& opPackageName);
+//    SensorManager(const String16& opPackageName);
     status_t assertStateLocked() const;
 
 private:

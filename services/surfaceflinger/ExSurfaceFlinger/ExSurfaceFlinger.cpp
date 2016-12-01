@@ -30,7 +30,7 @@
 #include "ExLayer.h"
 #include <fstream>
 #include <cutils/properties.h>
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #include <hardware/display_defs.h>
 #endif
 #define ATRACE_TAG ATRACE_TAG_GRAPHICS
@@ -258,7 +258,7 @@ void ExSurfaceFlinger::drawWormHoleIfRequired(HWComposer::LayerListIterator& cur
         const sp<const DisplayDevice>& hw,
         const Region& region) {
     if (cur != end) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
         if (cur->getCompositionType() != HWC_BLIT)
             drawWormhole(hw, region);
 #endif

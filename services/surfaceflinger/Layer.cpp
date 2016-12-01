@@ -467,7 +467,7 @@ void Layer::setGeometry(
 
     // this gives us only the "orientation" component of the transform
     const State& s(getDrawingState());
-#if defined(QTI_BSP) && !defined(QCOM_BSP_LEGACY)
+#ifdef HISI_3635
     if (!isOpaque(s)) {
 #else
     if (!isOpaque(s) || s.alpha != 0xFF) {
@@ -767,7 +767,7 @@ void Layer::drawWithOpenGL(const sp<const DisplayDevice>& hw,
     if(!s.active.crop.isEmpty()) {
         win = s.active.crop;
     }
-#ifdef QTI_BSP
+#ifdef HISI_3635
     win = s.transform.transform(win);
     win.intersect(hw->getViewport(), &win);
     win = s.transform.inverse().transform(win);
@@ -849,7 +849,7 @@ void Layer::computeGeometry(const sp<const DisplayDevice>& hw, Mesh& mesh,
     if (!s.active.crop.isEmpty()) {
         win.intersect(s.active.crop, &win);
     }
-#ifdef QTI_BSP
+#ifdef HISI_3635
     win = s.transform.transform(win);
     win.intersect(hw->getViewport(), &win);
     win = s.transform.inverse().transform(win);

@@ -29,7 +29,7 @@
 #include "ExSurfaceFlinger.h"
 #include "ExLayer.h"
 #include "ExHWComposer.h"
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #include <hardware/display_defs.h>
 #include <gralloc_priv.h>
 #include <qdMetaData.h>
@@ -68,7 +68,7 @@ ExHWComposer::~ExHWComposer() {
 }
 
 bool ExHWComposer::isCompositionTypeBlit(const int32_t compType) const {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     return (compType == HWC_BLIT);
 #else
     ALOGD_IF(mDebugLogs, "%s: compType = %d", __FUNCTION__, compType);
@@ -76,7 +76,7 @@ bool ExHWComposer::isCompositionTypeBlit(const int32_t compType) const {
     return false;
 }
 
-#if defined(QTI_BSP) && defined(SDM_TARGET)
+#ifdef HISI_3635
 uint32_t ExHWComposer::getS3DFlag(int disp) const {
     if (disp < 0) {
         return 0;

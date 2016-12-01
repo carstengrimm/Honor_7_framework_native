@@ -1003,6 +1003,16 @@ status_t GLConsumer::doGLFenceWaitLocked() const {
     return NO_ERROR;
 }
 
+Rect GLConsumer::getCurRefreshDirty() const {
+   Rect dirtyRect;
+    return dirtyRect;
+}
+
+Rect GLConsumer::getNewSDRRatio() const {
+   Rect dirtyRect;
+    return dirtyRect;
+}
+
 void GLConsumer::freeBufferLocked(int slotIndex) {
     GLC_LOGV("freeBufferLocked: slotIndex=%d", slotIndex);
     if (slotIndex == mCurrentTexture) {

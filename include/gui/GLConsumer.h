@@ -176,6 +176,10 @@ public:
     // getCurrentCrop returns the cropping rectangle of the current buffer.
     Rect getCurrentCrop() const;
 
+    Rect getCurRefreshDirty() const;
+
+    Rect getNewSDRRatio() const;
+
     // getCurrentTransform returns the transform of the current buffer.
     uint32_t getCurrentTransform() const;
 

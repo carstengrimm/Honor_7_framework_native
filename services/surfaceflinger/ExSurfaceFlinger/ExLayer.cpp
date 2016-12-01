@@ -34,7 +34,7 @@
 #include <utils/Log.h>
 
 #include <ui/GraphicBuffer.h>
-#ifdef QTI_BSP
+#ifdef HISI_3635
 #include <gralloc_priv.h>
 #include <qdMetaData.h>
 #include <hardware/display_defs.h>
@@ -72,7 +72,7 @@ static Rect getAspectRatio(const sp<const DisplayDevice>& hw,
 
 ExLayer::ExLayer(SurfaceFlinger* flinger, const sp<Client>& client,
                  const String8& name, uint32_t w, uint32_t h, uint32_t flags)
-#ifdef QTI_BSP
+#ifdef HISI_3635
     : Layer(flinger, client, name, w, h, flags),
       mMeshLeftTop(Mesh::TRIANGLE_FAN, 4, 2, 2),
       mMeshRightBottom(Mesh::TRIANGLE_FAN, 4, 2, 2) {
@@ -110,7 +110,7 @@ ExLayer::~ExLayer() {
 bool ExLayer::isExtOnly() const {
     const sp<GraphicBuffer>& activeBuffer(mActiveBuffer);
     if (activeBuffer != 0) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
         ANativeWindowBuffer* buffer = activeBuffer->getNativeBuffer();
         if(buffer) {
             private_handle_t* hnd = static_cast<private_handle_t*>
@@ -126,7 +126,7 @@ bool ExLayer::isExtOnly() const {
 bool ExLayer::isIntOnly() const {
     const sp<GraphicBuffer>& activeBuffer(mActiveBuffer);
     if (activeBuffer != 0) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
         ANativeWindowBuffer* buffer = activeBuffer->getNativeBuffer();
         if(buffer) {
             private_handle_t* hnd = static_cast<private_handle_t*>
@@ -142,7 +142,7 @@ bool ExLayer::isIntOnly() const {
 bool ExLayer::isSecureDisplay() const {
     const sp<GraphicBuffer>& activeBuffer(mActiveBuffer);
     if (activeBuffer != 0) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
         ANativeWindowBuffer* buffer = activeBuffer->getNativeBuffer();
         if(buffer) {
             private_handle_t* hnd = static_cast<private_handle_t*>
@@ -158,7 +158,7 @@ bool ExLayer::isSecureDisplay() const {
 bool ExLayer::isYuvLayer() const {
     const sp<GraphicBuffer>& activeBuffer(mActiveBuffer);
     if(activeBuffer != 0) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
         ANativeWindowBuffer* buffer = activeBuffer->getNativeBuffer();
         if(buffer) {
             private_handle_t* hnd = static_cast<private_handle_t*>
@@ -193,7 +193,7 @@ void ExLayer::setPosition(const sp<const DisplayDevice>& hw,
 
 void ExLayer::setAcquiredFenceIfBlit(int &fenceFd,
                                      HWComposer::HWCLayerInterface& layer) {
-#ifdef QTI_BSP
+#ifdef HISI_3635
     if (layer.getCompositionType() == HWC_BLIT) {
         sp<Fence> fence = mSurfaceFlingerConsumer->getCurrentFence();
         if (fence->isValid()) {
@@ -221,7 +221,7 @@ bool ExLayer::canAllowGPUForProtected() const {
 void ExLayer::drawWithOpenGL(const sp<const DisplayDevice>& hw,
         const Region& /* clip */, bool useIdentityTransform) const {
     const State& s(getDrawingState());
-#if defined(QTI_BSP) && defined(SDM_TARGET)
+#ifdef HISI_3635
     uint32_t s3d_fmt = 0;
     private_handle_t *pvt_handle = static_cast<private_handle_t *>
                                     (const_cast<native_handle_t*>(mActiveBuffer->handle));
@@ -256,7 +256,7 @@ void ExLayer::drawWithOpenGL(const sp<const DisplayDevice>& hw,
     if(!s.active.crop.isEmpty()) {
         win = s.active.crop;
     }
-#ifdef QTI_BSP
+#ifdef HISI_3635
     win = s.transform.transform(win);
     win.intersect(hw->getViewport(), &win);
     win = s.transform.inverse().transform(win);
@@ -278,14 +278,14 @@ void ExLayer::drawWithOpenGL(const sp<const DisplayDevice>& hw,
     texCoords[2] = vec2(right, 1.0f - bottom);
     texCoords[3] = vec2(right, 1.0f - top);
 
-#if defined(QTI_BSP) && defined(SDM_TARGET)
+#ifdef HISI_3635
     computeGeometryS3D(hw, mMesh, mMeshLeftTop, mMeshRightBottom, s3d_fmt);
 #endif
 
     RenderEngine& engine(mFlinger->getRenderEngine());
     engine.setupLayerBlending(mPremultipliedAlpha, isOpaque(s), s.alpha);
 
-#if defined(QTI_BSP) && defined(SDM_TARGET)
+#ifdef HISI_3635
     if (s3d_fmt != HWC_S3DMODE_NONE) {
         engine.setScissor(0, 0, hw->getWidth(), hw->getHeight());
         engine.drawMesh(mMeshLeftTop);
@@ -293,14 +293,14 @@ void ExLayer::drawWithOpenGL(const sp<const DisplayDevice>& hw,
     } else {
 #endif
         engine.drawMesh(mMesh);
-#if defined(QTI_BSP) && defined(SDM_TARGET)
+#ifdef HISI_3635
     }
 #endif
 
     engine.disableBlending();
 }
 
-#ifdef QTI_BSP
+#ifdef HISI_3635
 void ExLayer::computeGeometryS3D(const sp<const DisplayDevice>& hw, Mesh& mesh,
         Mesh& meshLeftTop, Mesh &meshRightBottom, uint32_t s3d_fmt) const
 {

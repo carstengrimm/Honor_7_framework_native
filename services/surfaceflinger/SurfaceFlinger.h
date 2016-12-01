@@ -87,7 +87,7 @@ class SurfaceFlinger : public BnSurfaceComposer,
                        private HWComposer::EventHandler
 {
 public:
-#ifdef QTI_BSP
+#ifdef HISI_3635
     friend class ExSurfaceFlinger;
 #endif
 
@@ -146,7 +146,7 @@ private:
     friend class DisplayEventConnection;
     friend class Layer;
     friend class LayerDim;
-#ifdef QTI_BSP
+#ifdef HISI_3635
     friend class ExLayer;
 #endif
     friend class MonitoredProducer;
